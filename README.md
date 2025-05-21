@@ -1,13 +1,13 @@
 # webappWebcam
 이 프로그램은 기존의 https://github.com/Emmett6401/webapp을 확장하는것이다. 
-## 확장 기능 
+## 1차 확장 기능 
 1. 웹브라우저에서 파일을 선택해서 서버로 전송
 2. 서버는 이미지 파일을 /static/uploads 폴더에 저장혹
 3. addbook.txt 파일에 이미지 파일 이름을 저장하게 한다.
    <img width="511" alt="image" src="https://github.com/user-attachments/assets/c138fe2e-a7ba-426a-90a7-0ca1573e187d" />
 
-## 주요 수정 내용 
-1. index.html
+### 주요 수정 내용 
+### 1. index.html
    ```
    <!DOCTYPE html>
 <html lang="ko">
@@ -102,7 +102,7 @@ enctype="multipart/form-data"
         }
     </script>
 ```
-2. app.py에서
+### 2. app.py에서
    ```
 @app.route('/add', methods=['POST'])
 def add_contact():
@@ -127,6 +127,10 @@ def add_contact():
 파일내용을 받아서 static/uploads 폴더에 저장하고 
 파일이름을 addbook.txt에 함께 저장하고 있다., 
 
-## 실행 화면 
+#### 실행 화면 
 <img width="190" alt="image" src="https://github.com/user-attachments/assets/a3b35487-f95e-4f2f-9a36-56803e04643e" />
 
+#### 이미지가 저장된 
+![image](https://github.com/user-attachments/assets/021db7fb-d570-4560-bba1-600aea35084b)
+
+## 2차 확장 기능 
