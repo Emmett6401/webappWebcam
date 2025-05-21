@@ -318,6 +318,22 @@ if __name__ == '__main__':
 
 ![image](https://github.com/user-attachments/assets/22719a5b-15a1-48c9-9164-bf24c4762e08)
 
+## 캐쉬 없애는 방법 
+
+![image](https://github.com/user-attachments/assets/31890344-0717-4cf3-be02-661333204291)
+```
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Book</title>
+    <!-- 캐시 방지용 meta 태그 (크롬 등에서 캐시 최소화) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- CSS 파일 연결 (버전 쿼리스트링 추가) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v={{ config['VERSION'] if config.get('VERSION') else 1 }}">
+</head>
+```
 
 
 
