@@ -7,6 +7,12 @@ git clone https://github.com/Emmett6401/webappWebcam
 pip install -r requirements.txt
 python app.py
 ```
+또는 
+```
+set FLASK_APP=app.py
+set FLASK_ENV=development
+flask run
+```
 
 ## 1차 확장 기능 
 1. 웹브라우저에서 파일을 선택해서 서버로 전송
