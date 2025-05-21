@@ -334,7 +334,130 @@ if __name__ == '__main__':
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v={{ config['VERSION'] if config.get('VERSION') else 1 }}">
 </head>
 ```
+## 최종적으로 코드 분리해서 정리 
 
+index.html에 있는 script 부분을 js로 옮겼다.    
+가독성을 좋게 하기 위함이다.    
+
+프로그램은 이상없이 잘 실행 되는것을 확인 했다.    
+index.html의 최종 코드는 
+```
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Book</title>
+    <!-- 캐시 방지용 meta 태그 (크롬 등에서 캐시 최소화) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- CSS 파일 연결 (버전 쿼리스트링 추가) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v={{ config['VERSION'] if config.get('VERSION') else 1 }}">
+</head>
+<body>
+    <h1>Address Book</h1>
+    <form action="/add" method="post" enctype="multipart/form-data">
+        <label for="name" class="label-name">Name:</label>
+        <input type="text" id="name" name="pyname" required>
+        <br><br>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="pyphone" required>
+        <br><br>
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="pybirthday" required>
+        <br><br>
+        <label for="photo">Photo:</label>
+        <input type="file" id="photo" name="pyphoto" accept="image/*" onchange="previewPhoto(event)">
+        <button type="button" onclick="openCamera()">웹캠 촬영</button>
+        <br><br>
+        <video id="camera" width="200" autoplay style="display:none;"></video>
+        <canvas id="canvas" width="200" style="display:none;"></canvas>
+        <img id="photoPreview" src="#" alt="Photo Preview" style="display:none; max-width:200px;"/>
+        <br><br>
+        <button type="submit">Add Contact</button>        
+    </form>
+    <!-- JS 파일 분리 -->
+    <script src="{{ url_for('static', filename='js/main.js') }}?v={{ config['VERSION'] if config.get('VERSION') else 1 }}"></script>
+</body>
+</html>
+```
+main.js는 
+```
+function previewPhoto(event) {
+    const input = event.target;
+    const preview = document.getElementById('photoPreview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        preview.src = '#';
+        preview.style.display = 'none';
+    }
+}
+
+function openCamera() {
+    const video = document.getElementById('camera');
+    const canvas = document.getElementById('canvas');
+    video.style.display = 'block';
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+            video.play();
+            // 촬영 버튼 추가
+            if (!document.getElementById('captureBtn')) {
+                const btn = document.createElement('button');
+                btn.textContent = '촬영';
+                btn.type = 'button';
+                btn.id = 'captureBtn';
+                btn.onclick = function() {
+                    capturePhoto(video, canvas);
+                };
+                video.parentNode.insertBefore(btn, video.nextSibling);
+            }
+        })
+        .catch(err => {
+            alert('웹캠을 사용할 수 없습니다: ' + err);
+        });
+}
+
+function capturePhoto(video, canvas) {
+    const context = canvas.getContext('2d');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    // 미리보기
+    const dataURL = canvas.toDataURL('image/png');
+    document.getElementById('photoPreview').src = dataURL;
+    document.getElementById('photoPreview').style.display = 'block';
+    // input[type=file]을 비움
+    document.getElementById('photo').value = '';
+    // dataURL을 hidden input에 저장
+    let hidden = document.getElementById('webcamImage');
+    if (!hidden) {
+        hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.name = 'webcamImage';
+        hidden.id = 'webcamImage';
+        document.querySelector('form').appendChild(hidden);
+    }
+    hidden.value = dataURL;
+    // 웹캠 끄기
+    if (video.srcObject) {
+        video.srcObject.getTracks().forEach(track => track.stop());
+    }
+    video.style.display = 'none';
+    canvas.style.display = 'none';
+    // 촬영 버튼 제거
+    const btn = document.getElementById('captureBtn');
+    if (btn) btn.remove();
+}
+
+```
 
 
 
