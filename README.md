@@ -8,8 +8,8 @@
 
 ### 주요 수정 내용 
 ### 1. index.html
-   ```
-   <!DOCTYPE html>
+```
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -123,7 +123,7 @@ def add_contact():
         writer.writerow([name, phone, birthday, photo_name_to_save])
 
     return redirect('/')
-    ```
+ ```
 파일내용을 받아서 static/uploads 폴더에 저장하고 
 파일이름을 addbook.txt에 함께 저장하고 있다., 
 
@@ -134,3 +134,4 @@ def add_contact():
 ![image](https://github.com/user-attachments/assets/021db7fb-d570-4560-bba1-600aea35084b)
 
 ## 2차 확장 기능 
+1. 웹 카메라로 직접 촬영해서 올리기
