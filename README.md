@@ -1,5 +1,13 @@
 # webappWebcam
 이 프로그램은 기존의 https://github.com/Emmett6401/webapp을 확장하는것이다. 
+
+## 프로그램 실행 방법
+```
+git clone https://github.com/Emmett6401/webappWebcam
+pip install -r requirements.txt
+python app.py
+'''
+
 ## 1차 확장 기능 
 1. 웹브라우저에서 파일을 선택해서 서버로 전송
 2. 서버는 이미지 파일을 /static/uploads 폴더에 저장혹
