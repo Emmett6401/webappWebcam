@@ -127,5 +127,6 @@ def add_contact():
 파일내용을 받아서 static/uploads 폴더에 저장하고 
 파일이름을 addbook.txt에 함께 저장하고 있다., 
 
-  이것은 
-데이터가 
+## 실행 화면 
+<img width="190" alt="image" src="https://github.com/user-attachments/assets/a3b35487-f95e-4f2f-9a36-56803e04643e" />
+
