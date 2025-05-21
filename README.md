@@ -4,6 +4,8 @@
 1. 웹브라우저에서 파일을 선택해서 서버로 전송
 2. 서버는 이미지 파일을 /static/uploads 폴더에 저장혹
 3. addbook.txt 파일에 이미지 파일 이름을 저장하게 한다.
+   <img width="511" alt="image" src="https://github.com/user-attachments/assets/c138fe2e-a7ba-426a-90a7-0ca1573e187d" />
+
 ## 주요 수정 내용 
 1. index.html
    ```
