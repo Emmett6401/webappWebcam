@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Book</title>
+    <!-- 캐시 방지용 meta 태그 (크롬 등에서 캐시 최소화) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- CSS 파일 연결 (버전 쿼리스트링 추가) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v={{ config['VERSION'] if config.get('VERSION') else 1 }}">
+</head>
+<body>
+    <h1>Address Book</h1>
+    <form action="/add" method="post" enctype="multipart/form-data">
+        <label for="name" class="label-name">Name:</label>
+        <input type="text" id="name" name="pyname" required>
+        <br><br>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="pyphone" required>
+        <br><br>
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="pybirthday" required>
+        <br><br>
+        <label for="photo">Photo:</label>
+        <input type="file" id="photo" name="pyphoto" accept="image/*" onchange="previewPhoto(event)">
+        <button type="button" onclick="openCamera()">웹캠 촬영</button>
+        <br><br>
+        <video id="camera" width="200" autoplay style="display:none;"></video>
+        <canvas id="canvas" width="200" style="display:none;"></canvas>
+        <img id="photoPreview" src="#" alt="Photo Preview" style="display:none; max-width:200px;"/>
+        <br><br>
+        <button type="submit">Add Contact</button>        
+    </form>
+    <!-- JS 파일 분리 -->
+    <script src="{{ url_for('static', filename='js/main.js') }}?v={{ config['VERSION'] if config.get('VERSION') else 1 }}"></script>
+</body>
+</html>
